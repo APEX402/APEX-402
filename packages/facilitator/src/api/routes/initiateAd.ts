@@ -1,7 +1,6 @@
 import type { Request, Response } from "express";
-import type { SignedPaymentPayload } from "@q402/core";
-import { SignedPaymentPayloadSchema } from "@q402/core";
-import { verifyPaymentWithChecks } from "../../services/verification";
+import { keccak256, toHex } from 'viem';
+import { privateKeyToAccount } from "viem/accounts";
 import type { EnvConfig } from "../../config/env";
 
 /**
@@ -18,25 +17,28 @@ export async function handleInitiateAd(
 
     console.log("/verify go req body", req.body);
 
-    const parseResult = SignedPaymentPayloadSchema.safeParse(req.body);
+    const payload = {
+      adId: "ad123",
+      viewerId: "user456",
+      price: "100",
+      currency: "TOKEN",
+      nonce: crypto.randomUUID(),  // prevents replay
+      exp: Math.floor(Date.now() / 1000) + 600  // token expires in 10 min
+    };
 
+    
+    const payloadString = JSON.stringify(payload);
+    const payloadHash = keccak256(toHex(Buffer.from(payloadString)));
 
-    if (!parseResult.success) {
-      res.status(400).json({
-        error: "Invalid payment payload",
-        details: parseResult.error.errors,
-      });
-      return;
-    }
+    const account = privateKeyToAccount(config.sponsorPrivateKey);
 
-    const payload: SignedPaymentPayload = parseResult.data as SignedPaymentPayload;
+    const signature = await account.signMessage({
+      message: { raw: payloadHash },
+    });
 
-    // Verify payment
-    const result = await verifyPaymentWithChecks(payload, config);
-
-    console.log("/verify go result", result);
-
-    res.json(result);
+    res.json({
+      facilitatorSignature: signature
+    });
   } catch (error) {
     console.error("Verification error:", error);
     res.status(500).json({
