@@ -5,6 +5,7 @@ import type { EnvConfig } from "../config/env";
 import type { NetworkClients } from "../config/networks";
 import { handleVerify } from "./routes/verify";
 import { handleSettle } from "./routes/settle";
+import { handleInitiateAd } from "./routes/initiateAd";
 import { handleSupported } from "./routes/supported";
 
 /**
@@ -41,6 +42,7 @@ export function createServer(
       endpoints: {
         verify: "POST /verify",
         settle: "POST /settle",
+        initiateAd: "POST /initiate-ad",
         supported: "GET /supported",
       },
     });
@@ -49,6 +51,8 @@ export function createServer(
   app.post("/verify", (req, res) => handleVerify(req, res, config));
 
   app.post("/settle", (req, res) => handleSettle(req, res, clientsMap));
+
+  app.post("/initiate-ad", (req, res) => handleInitiateAd(req, res, config));
 
   app.get("/supported", (req, res) => handleSupported(req, res, clientsMap));
 
