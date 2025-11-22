@@ -37,6 +37,7 @@ export async function handleInitiateAd(
     });
 
     res.json({
+      hash: payloadHash,
       facilitatorSignature: signature
     });
   } catch (error) {
