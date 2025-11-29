@@ -55,7 +55,7 @@ COPY --from=builder /app/pnpm-workspace.yaml ./
 COPY --from=builder /app/pnpm-lock.yaml ./
 
 # Ensure production dependencies (including viem) are installed
-RUN CI=true pnpm install --prod --frozen-lockfile
+# RUN CI=true pnpm install --prod --frozen-lockfile
 
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs && \
