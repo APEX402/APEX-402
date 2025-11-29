@@ -47,6 +47,7 @@ RUN npm install -g pnpm@10
 # Copy built packages and dependencies
 COPY --from=builder /app/packages/core/dist ./packages/core/dist
 COPY --from=builder /app/packages/core/package.json ./packages/core/
+COPY --from=builder /app/packages/core/node_modules ./packages/core/node_modules
 COPY --from=builder /app/packages/facilitator/dist ./packages/facilitator/dist
 COPY --from=builder /app/packages/facilitator/package.json ./packages/facilitator/
 COPY --from=builder /app/packages/facilitator/node_modules ./packages/facilitator/node_modules
