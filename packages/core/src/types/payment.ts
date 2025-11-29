@@ -106,7 +106,7 @@ export interface PaymentRequiredResponse {
   /**
    * Accepted payment methods
    */
-  accepts: PaymentDetails[];
+  accepts: Array<PaymentDetails | unknown>;
 
   /**
    * Optional error message

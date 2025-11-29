@@ -37,7 +37,7 @@ export function selectPaymentDetails(
   const { network, scheme, maxAmount } = options ?? {};
 
   // Filter by preferences
-  let candidates = response.accepts;
+  let candidates = response.accepts as PaymentDetails[];
 
   if (network) {
     const filtered = candidates.filter((details) => details.networkId === network);
