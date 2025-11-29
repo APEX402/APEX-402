@@ -52,6 +52,10 @@ COPY --from=builder /app/packages/facilitator/package.json ./packages/facilitato
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/pnpm-workspace.yaml ./
+COPY --from=builder /app/pnpm-lock.yaml ./
+
+# Ensure production dependencies (including viem) are installed
+RUN pnpm install --prod --frozen-lockfile
 
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs && \
