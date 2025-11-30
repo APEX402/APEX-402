@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import { keccak256, toHex } from 'viem';
 import { privateKeyToAccount } from "viem/accounts";
+import crypto from "crypto";
 import type { EnvConfig } from "../../config/env";
 
 /**
