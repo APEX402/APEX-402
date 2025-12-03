@@ -19,4 +19,4 @@ The APEX-402 facilitator can be easily deployed to the server via docker. See th
 
 ## Acknowledgement
 
-APEX-402 is built upon the [q402 protocol](https://github.com/quackai-labs/Q402) by Quack AI and BNB Chain. We thank the original developer for their fundamental and open-sourced work.
+APEX-402 is built based on the [q402 protocol](https://github.com/quackai-labs/Q402) by Quack AI and BNB Chain. We thank the original developer for their fundamental and open-sourced work.
